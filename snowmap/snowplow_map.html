@@ -125,7 +125,7 @@ impassible_car.bindPopup(function(evt){
     return "Street is Impassible because of an <strong>Illegally Parked Car</strong> <br>Date Reported: " + featureDate.toLocaleString();
 });
 
-var 83_car = L.esri.featureLayer({
+var illegal_car = L.esri.featureLayer({
   url: "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Illegally_Parked_Cars_83s/FeatureServer/0/",
   where: "Impassible = 'No' and Date > '" + MyDateString + "'",
   pointToLayer: function (geojson, latlng) {
@@ -136,7 +136,7 @@ var 83_car = L.esri.featureLayer({
 }).addTo(map);
 
  
-83_car.bindPopup(function(evt){
+illegal_car.bindPopup(function(evt){
     var featureDate = new Date(evt.feature.properties.Date);
     return "<strong>Illegally Parked Car</strong> <br>Date Reported: " + featureDate.toLocaleString();
 });
