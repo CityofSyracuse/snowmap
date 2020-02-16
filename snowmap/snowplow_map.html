@@ -86,6 +86,12 @@ var black_car = L.icon({
     popupAnchor: [0, -11]
   });
 
+var red_car = L.icon({
+    iconUrl: 'red_car.png',
+    iconSize: [20,20],
+    iconAnchor: [13.5, 17.5],
+    popupAnchor: [0, -11]
+  });
 
 plowed.addTo(map);
 plowedlasthour.addTo(map);
@@ -103,9 +109,25 @@ var startTimeInput = new Date() - fourty_eight_hours;
 var date = new Date(startTimeInput)
 var MyDateString = date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
 
-var illegal_car = L.esri.featureLayer({
+var impassible_car = L.esri.featureLayer({
   url: "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Illegally_Parked_Cars_83s/FeatureServer/0/",
-  where: "Date > '" + MyDateString + "'",
+  where: "Impassible = 'Yes' and Date > '" + MyDateString + "'",
+  pointToLayer: function (geojson, latlng) {
+      return L.marker(latlng, {
+        icon: red_car
+      });
+    }
+}).addTo(map);
+
+ 
+impassible_car.bindPopup(function(evt){
+    var featureDate = new Date(evt.feature.properties.Date);
+    return "Street is Impassible because of an <strong>Illegally Parked Car</strong> <br>Date Reported: " + featureDate.toLocaleString();
+});
+
+var 83_car = L.esri.featureLayer({
+  url: "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Illegally_Parked_Cars_83s/FeatureServer/0/",
+  where: "Impassible = 'No' and Date > '" + MyDateString + "'",
   pointToLayer: function (geojson, latlng) {
       return L.marker(latlng, {
         icon: black_car
@@ -113,9 +135,8 @@ var illegal_car = L.esri.featureLayer({
     }
 }).addTo(map);
 
-
  
-illegal_car.bindPopup(function(evt){
+83_car.bindPopup(function(evt){
     var featureDate = new Date(evt.feature.properties.Date);
     return "<strong>Illegally Parked Car</strong> <br>Date Reported: " + featureDate.toLocaleString();
 });
