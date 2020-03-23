@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # In[173]:
@@ -101,7 +100,7 @@ vehicles = [item.replace("\n", "") for item in vehicles]
 # In[137]:
 
 
-timezone = timedelta(hours = 5)
+timezone = timedelta(hours = 4)
 #systime = datetime.now() + timezone - timedelta(hours = 1)
 #currenthour = (systime - timezone).hour
 #date = (systime - timezone).strftime('%Y-%m-%d')
@@ -163,4 +162,3 @@ gps_data = gps_data.append(appended_data)
 
 
 gps_data.to_csv("/home/pi/snowmap/snowmap/gps_data.csv", index = False)
-
