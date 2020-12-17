@@ -15,4 +15,3 @@ git commit -m "Update the map"
 
 git push https://samedelstein:Syr2021!@github.com/CityOfSyracuse/snowmap.git --all
 
-EXIT/B
