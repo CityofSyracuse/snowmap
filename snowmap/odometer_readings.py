@@ -19,7 +19,7 @@ from datetime import *
 import numpy as np
 import json
 import os
-os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap/snowmap/snowmap')
 
 # In[248]:
 

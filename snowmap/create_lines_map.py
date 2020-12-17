@@ -9,7 +9,7 @@ from geopandas import GeoDataFrame
 import pandas as pd
 from shapely.geometry import shape, Point, mapping, LineString
 import os
-os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap/snowmap/snowmap')
 
 # In[402]:
 
