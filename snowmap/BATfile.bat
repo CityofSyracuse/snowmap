@@ -1,17 +1,18 @@
-set root=C:\Users\adarc\AppData\Local\Continuum\anaconda3
+@echo on
+call C:\Users\adarc\anaconda3\Scripts\activate.bat
 
-conda activate exe
+call conda activate exe
 
-python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\snowmap\snowmap\clearGPSdata.py"
+call python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\snowmap\snowmap\clearGPSdata.py"
 
-python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\snowmap\snowmap\pullGPSdata.py"
+call python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\snowmap\snowmap\pullGPSdata.py"
 
-python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\snowmap\snowmap\create_polygons.py"
+call python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\snowmap\snowmap\create_polygons.py"
 
 #!/bin/bash
-cd Desktop/City of Syracuse/snowmap-master/snowmap/snowmap
-git add *
+call cd Desktop/City of Syracuse/snowmap-master/snowmap/snowmap
+call git add *
 
-git commit -m "Update the map"
+call git commit -m "Update the map"
 
-git push https://samedelstein:Syr2021!@github.com/CityOfSyracuse/snowmap.git --all
+call git push https://samedelstein:Syr2021!@github.com/CityOfSyracuse/snowmap.git --all
