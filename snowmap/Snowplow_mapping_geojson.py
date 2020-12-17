@@ -21,7 +21,7 @@ from datetime import *
 import numpy as np
 import json
 import os
-os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap/snowmap/snowmap')
 
 # In[1054]:
 
@@ -42,7 +42,7 @@ with open('data.json') as f:
 
 with open('vehicleLabel.txt', 'r') as f:
     vehicles = f.readlines()
-vehicles = [item.replace("\n", "") for item in vehicles]
+    vehicles = [item.replace("\n", "") for item in vehicles]
 #vehicles = [int(x) for x in vehicles]
 
 snowice = [
@@ -106,7 +106,7 @@ dataSrc = dataSrc[(dataSrc['CART_TYPE'] != 'INTERSTATES') & (dataSrc['CART_TYPE'
 # In[1056]:
 
 
-mergeddata_all = gpd.read_file('/home/pi/snowmap/snowmap/mergeddata.geojson')
+mergeddata_all = gpd.read_file('mergeddata.geojson')
 
 
 # In[1057]:
@@ -166,7 +166,7 @@ for i in vehicles:
 
     except:
         print ("fail: " + i)
-	traceback.print_exc()
+        traceback.print_exc()
 
 
 # appended_data['datetime'] = appended_data['date'].astype(str) + " " + appended_data['hour'].astype(str) + ":00:00"
