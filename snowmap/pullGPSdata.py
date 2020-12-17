@@ -155,7 +155,7 @@ for i in vehicles:
             gpsMessage_filter['truck_name'] = i
             gpsMessage_filter['timeedit'] = pd.to_datetime(gpsMessage_filter['messageTime'])
             #Nameedit['hour'] = (Nameedit["timeedit"]-timezone).dt.hour
-            gpsMessage_filter['datetime'] = (gpsMessage_filter['timeedit']-timezone).dt.strftime("%Y-%m-%d %H:00:00")
+            gpsMessage_filter['datetime'] = (gpsMessage_filter['timeedit']-timezone).dt.strftime("%Y-%m-%d %H:%M:00")
             gpsMessage_filter['longitude'] = gpsMessage_filter.longitude.round(6)
             gpsMessage_filter['latitude'] = gpsMessage_filter.latitude.round(6)
             gpsMessage_filter = gpsMessage_filter[['latitude','longitude','messageTime','odometer.value','truck_name','timeedit','datetime']]
