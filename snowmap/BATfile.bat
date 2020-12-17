@@ -1,3 +1,5 @@
+set root=C:\Users\adarc\AppData\Local\Continuum\anaconda3
+
 conda activate exe
 
 python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\snowmap\snowmap\clearGPSdata.py"
@@ -12,7 +14,4 @@ git add *
 
 git commit -m "Update the map"
 
-
 git push https://samedelstein:Syr2021!@github.com/CityOfSyracuse/snowmap.git --all
-
-EXIT/B
