@@ -8,12 +8,13 @@ import geopandas as gpd
 from geopandas import GeoDataFrame
 import pandas as pd
 from shapely.geometry import shape, Point, mapping, LineString
-
+import os
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
 
 # In[402]:
 
 
-gdf_segments = gpd.read_file("/home/pi/snowmap/snowmap/streets.shp")
+gdf_segments = gpd.read_file("streets.shp")
 
 
 # In[403]:
@@ -32,7 +33,7 @@ gdf_segments = gdf_segments.to_crs({'init': 'epsg:4326'})
 # In[432]:
 
 
-gps_data = pd.read_csv("/home/pi/snowmap/snowmap/gps_data.csv")
+gps_data = pd.read_csv("gps_data.csv")
 
 
 # In[433]:
@@ -94,13 +95,12 @@ lines_df.crs = {'init' :'epsg:4326'}
 # In[439]:
 
 
-with open('/home/pi/snowmap/snowmap/lines_df.geojson', 'w') as f:
+with open('lines_df.geojson', 'w') as f:
     f.write(lines_df.to_json())
 
 
 # In[440]:
 
 
-with open('/home/pi/snowmap/snowmap/points_df.geojson', 'w') as f:
+with open('points_df.geojson', 'w') as f:
     f.write(points_df.to_json())
-

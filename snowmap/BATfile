@@ -1,0 +1,17 @@
+conda activate exe
+
+python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\vehicleList.py"
+
+python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\create_lines_map.py"
+
+python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\odometer_readings.py"
+
+python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\clearGPSdata.py"
+
+python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\pullGPSdata.py"
+
+python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\create_polygons.py"
+
+python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\Snowplow_mapping_geojson.py"
+
+python "C:\Users\adarc\Desktop\City of Syracuse\snowmap-master\snowmap\Snowplow_mapping_geojson_getting_started.py"

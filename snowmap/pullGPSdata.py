@@ -3,7 +3,7 @@
 # In[173]:
 
 
-import requests 
+import requests
 from time import gmtime, strftime
 import time as t
 import pandas as pd
@@ -18,12 +18,13 @@ from datetime import *
 import numpy as np
 import json
 import re
-
+import os
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
 
 # In[136]:
 
 
-with open('/home/pi/snowmap/snowmap/data.json') as f:
+with open('data.json') as f:
     response = json.load(f)
 
 
@@ -35,7 +36,7 @@ with open('/home/pi/snowmap/snowmap/data.json') as f:
 # In[170]:
 
 
-with open('/home/pi/snowmap/snowmap/vehicleLabel.txt', 'r') as f:
+with open('vehicleLabel.txt', 'r') as f:
     vehicles = f.readlines()
 
 
@@ -47,50 +48,47 @@ with open('/home/pi/snowmap/snowmap/vehicleLabel.txt', 'r') as f:
 
 
 snowice = [
-"952150",
-"955394",
-"952315",
-"975119",
-"954281",
-"954050",
-"954047",
-"952080",
-"987971",
-"977331",
-"954279",
-"973267",
-"973265",
-"954287",
-"970771",
-"952406",
-"966234",
-"952216",
-"952883",
-"938761",
-"940427",
-"950063",
 "977624",
 "966199",
+"975119",
 "951170",
-"988584",
+"1036576",
+"952216",
+"952883",
 "975118",
 "951625",
-"988600",
-"960635",
-"957144",
-"955417",
+"954047",
+"952406",
+"940427",
+"952150",
+"952315",
+"954287",
+"954281",
+"951074",
+"954050",
+"971650",
+"967230",
 "966223",
 "966236",
+"966474",
 "955397",
+"970771",
+"973265",
 "953696",
-"955411",
+"954279",
+"973267",
+"950063",
 "973261",
+"938761",
 "952387",
 "977159",
+"987971",
 "977106",
+"977331",
 "988791",
 "977157",
-"983452"]
+"988604",
+"1049354"]
 
 
 
@@ -125,19 +123,19 @@ end_date = systime.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 #appended_data = pd.DataFrame(columns=['latitude','longitude','messageTime','odometer.value','truck_name','timeedit','datetime'])
-gps_data = pd.read_csv("/home/pi/snowmap/snowmap/gps_data.csv")
+gps_data = pd.read_csv("gps_data.csv")
 appended_data = pd.DataFrame(columns=['latitude','longitude','messageTime','odometer.value','truck_name','timeedit','datetime'])
 # In[146]:
 
 
 for i in vehicles:
     try:
-        rjson = requests.get("https://api.networkfleet.com/locations/vehicle/"+i+"/track?limit=240&with-start-date="+start_date+"&with-end-date="+end_date, 
+        rjson = requests.get("https://api.networkfleet.com/locations/vehicle/"+i+"/track?limit=240&with-start-date="+start_date+"&with-end-date="+end_date,
                        headers={'Authorization': "Bearer "+response['access_token'],
                                 'Accept': "application/vnd.networkfleet.api-v1+json",
                                 'Content-Type': "application/vnd.networkfleet.api-v1+json"}
                       ).json()
-        
+
         if rjson['count'] != 0:
             jsondf = pd.DataFrame(rjson)
             gpsMessage = pd.io.json.json_normalize(jsondf['gpsMessage'])
@@ -153,7 +151,7 @@ for i in vehicles:
             print("success: "+ i)
         else:
             print("0 count: " +i)
-        
+
     except:
         print ("fail: " + i)
 
@@ -161,4 +159,4 @@ gps_data = gps_data.append(appended_data)
 # In[150]:
 
 
-gps_data.to_csv("/home/pi/snowmap/snowmap/gps_data.csv", index = False)
+gps_data.to_csv("gps_data.csv", index = False)

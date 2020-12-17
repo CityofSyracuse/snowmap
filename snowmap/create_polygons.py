@@ -1,4 +1,4 @@
-import requests 
+import requests
 import traceback
 from time import gmtime, strftime
 import time as t
@@ -15,8 +15,10 @@ import numpy as np
 import json
 import io
 import requests
+import os
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
 
-dataSrc = gpd.read_file('/home/pi/snowmap/snowmap/dataSrc.geojson')
+dataSrc = gpd.read_file('dataSrc.geojson')
 
 dataSrc = dataSrc[(dataSrc['CART_TYPE'] != 'INTERSTATES') & (dataSrc['CART_TYPE']!='RAMPS') & (dataSrc['CART_TYPE']!='PEDESTRIAN') &
         (dataSrc['CART_OWN']!="PRIVATE") &
@@ -25,7 +27,7 @@ dataSrc = dataSrc[(dataSrc['CART_TYPE'] != 'INTERSTATES') & (dataSrc['CART_TYPE'
        ]
 
 
-c=pd.read_csv('/home/pi/snowmap/snowmap/gps_data.csv')
+c=pd.read_csv('gps_data.csv')
 
 geometry = [Point(xy) for xy in zip(c.longitude, c.latitude)]
 
@@ -46,18 +48,12 @@ mergeddata = mergeddata_all[mergeddata_all['datetime'] == mergeddata_all["dateti
 
 notplowed = dataSrc[(~dataSrc['STREET_ID'].isin(mergeddata_all['STREET_ID'].astype(object)))]
 
-with open('/home/pi/snowmap/snowmap/mergeddata.geojson', 'w') as f:
+with open('mergeddata.geojson', 'w') as f:
     f.write(mergeddata_all.to_json())
 
 
-with open('/home/pi/snowmap/snowmap/last_hour.geojson', 'w') as f:
+with open('last_hour.geojson', 'w') as f:
     f.write(mergeddata.to_json())
 
-with open('/home/pi/snowmap/snowmap/notplowed.geojson', 'w') as f:
+with open('notplowed.geojson', 'w') as f:
     f.write(notplowed.to_json())
-
-
-
-
-
-

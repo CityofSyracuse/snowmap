@@ -4,7 +4,7 @@
 # In[247]:
 
 
-import requests 
+import requests
 from time import gmtime, strftime
 import time as t
 import pandas as pd
@@ -18,12 +18,13 @@ import folium
 from datetime import *
 import numpy as np
 import json
-
+import os
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
 
 # In[248]:
 
 
-with open('/home/pi/snowmap/snowmap/data.json') as f:
+with open('data.json') as f:
     response = json.load(f)
 
 
@@ -31,7 +32,7 @@ with open('/home/pi/snowmap/snowmap/data.json') as f:
 
 
 #gps_data = pd.DataFrame(columns=['latitude','longitude', 'messageTime','odometer.value', 'vehicleId'])
-gps_data = pd.read_csv("/home/pi/snowmap/snowmap/gps_data.csv")
+gps_data = pd.read_csv("gps_data.csv")
 
 
 # In[250]:
@@ -63,7 +64,7 @@ odometer_merge['difference'] = odometer_merge['odometer.value_y'] - odometer_mer
 # In[254]:
 
 
-odometer_merge.to_csv("/home/pi/snowmap/snowmap/miles_traveled.csv", index = False)
+odometer_merge.to_csv("miles_traveled.csv", index = False)
 
 
 # In[264]:
@@ -76,5 +77,4 @@ count_vehicles.columns = ['datetime', 'count']
 # In[265]:
 
 
-count_vehicles.to_csv("/home/pi/snowmap/snowmap/count_vehicles.csv", index = False)
-
+count_vehicles.to_csv("count_vehicles.csv", index = False)

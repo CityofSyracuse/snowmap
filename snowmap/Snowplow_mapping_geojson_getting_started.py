@@ -6,7 +6,7 @@
 # In[1013]:
 
 
-import requests 
+import requests
 from time import gmtime, strftime
 import time as t
 import pandas as pd
@@ -20,12 +20,14 @@ import folium
 from datetime import *
 import numpy as np
 import json
+import os
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
 
 
 # In[1054]:
 
 
-with open('/home/pi/snowmap/snowmap/data.json') as f:
+with open('data.json') as f:
     response = json.load(f)
 
 
@@ -33,58 +35,53 @@ with open('/home/pi/snowmap/snowmap/data.json') as f:
 
 
 snowice = [
-"952150",
-"955394",
-"952315",
-"975119",
-"954281",
-"954050",
-"954047",
-"952080",
-"987971",
-"977331",
-"954279",
-"973267",
-"973265",
-"954287",
-"970771",
-"952406",
-"966234",
-"952216",
-"952883",
-"938761",
-"940427",
-"950063",
 "977624",
 "966199",
+"975119",
 "951170",
-"988584",
+"1036576",
+"952216",
+"952883",
 "975118",
 "951625",
-"988600",
-"960635",
-"957144",
-"955417",
+"954047",
+"952406",
+"940427",
+"952150",
+"952315",
+"954287",
+"954281",
+"951074",
+"954050",
+"971650",
+"967230",
 "966223",
 "966236",
+"966474",
 "955397",
+"970771",
+"973265",
 "953696",
-"955411",
+"954279",
+"973267",
+"950063",
 "973261",
+"938761",
 "952387",
 "977159",
+"987971",
 "977106",
+"977331",
 "988791",
 "977157",
-"983452",
-"988604"
-]
+"988604",
+"1049354"]
 
 
 # In[1016]:
 
 
-dataSrc = gpd.read_file('/home/pi/snowmap/snowmap/dataSrc.geojson')
+dataSrc = gpd.read_file('dataSrc.geojson')
 
 
 # In[1017]:
@@ -133,12 +130,12 @@ appended_data = pd.DataFrame(columns=['STREET_ID', 'datetime'])
 
 for i in snowice:
     try:
-        rjson = requests.get("https://api.networkfleet.com/locations/vehicle/"+i+"/track?limit=60&with-start-date="+start_date+"&with-end-date="+end_date, 
+        rjson = requests.get("https://api.networkfleet.com/locations/vehicle/"+i+"/track?limit=60&with-start-date="+start_date+"&with-end-date="+end_date,
                        headers={'Authorization': "Bearer "+response['access_token'],
                                 'Accept': "application/vnd.networkfleet.api-v1+json",
                                 'Content-Type': "application/vnd.networkfleet.api-v1+json"}
                       ).json()
-        
+
         if rjson['count'] != 0:
             x = pd.DataFrame(rjson)
             Name = pd.io.json.json_normalize(x['gpsMessage'])
@@ -160,7 +157,7 @@ for i in snowice:
             print("success: "+ i)
         else:
             print("0 count: " +i)
-        
+
     except:
         print ("fail: " + i)
 
@@ -225,7 +222,7 @@ mergeddata['datetime'] = mergeddata['datetime'].astype(str)
 # In[1070]:
 
 
-with open('/home/pi/snowmap/snowmap/mergeddata.geojson', 'w') as f:
+with open('mergeddata.geojson', 'w') as f:
     f.write(mergeddata_all.to_json())
 
 
@@ -233,7 +230,7 @@ with open('/home/pi/snowmap/snowmap/mergeddata.geojson', 'w') as f:
 # In[1071]:
 
 
-with open('/home/pi/snowmap/snowmap/last_hour.geojson', 'w') as f:
+with open('last_hour.geojson', 'w') as f:
     f.write(mergeddata.to_json())
 
 
@@ -252,6 +249,5 @@ notplowed = notplowed[['STREET', 'geometry', 'STREET_ID']]
 # In[1074]:
 
 
-with open('/home/pi/snowmap/snowmap/notplowed.geojson', 'w') as f:
+with open('notplowed.geojson', 'w') as f:
     f.write(notplowed.to_json())
-

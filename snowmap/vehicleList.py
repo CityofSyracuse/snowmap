@@ -4,7 +4,7 @@
 # In[1]:
 
 
-import requests 
+import requests
 from time import gmtime, strftime
 import time as t
 import pandas as pd
@@ -18,12 +18,13 @@ import folium
 from datetime import *
 import numpy as np
 import json
-
+import os
+os.chdir('Desktop/City of Syracuse/snowmap-master/snowmap')
 
 # In[2]:
 
 
-with open('/home/pi/snowmap/snowmap/data.json') as f:
+with open('data.json') as f:
     response = json.load(f)
 
 
@@ -64,7 +65,6 @@ vehicleLabel = pd.io.json.json_normalize(vehiclejsondf['vehicle'])[['@id', 'labe
 # In[10]:
 
 
-with open('/home/pi/snowmap/snowmap/vehicleLabel.txt', 'w') as filehandle:
+with open('vehicleLabel.txt', 'w') as filehandle:
     for listitem in vehiclelist:
         filehandle.write('%s\n' % listitem)
-
