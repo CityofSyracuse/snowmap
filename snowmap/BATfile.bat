@@ -15,4 +15,4 @@ call git add *
 
 call git commit -m "Update the map"
 
-call git push https://adarcang:Syr2021!@github.com/CityofSyracuse/snowmap.git --all
+call git push https://samedelstein:Syr2021!@github.com/CityOfSyracuse/snowmap.git --all
