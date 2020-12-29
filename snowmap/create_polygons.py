@@ -35,7 +35,7 @@ Nameedit1 = GeoDataFrame(c, geometry=geometry)
 
 Nameedit1 = GeoDataFrame(Nameedit1, geometry='geometry')
 
-Nameedit1.crs = {'init' :'epsg:4326'}
+Nameedit1.crs = 'EPSG:4326'
 
 x1 = gpd.sjoin(Nameedit1, dataSrc, op='intersects')
 
