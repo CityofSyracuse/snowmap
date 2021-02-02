@@ -153,7 +153,7 @@ timezone = timedelta(hours = 4)
 
 
 systime = datetime.now() + timezone
-start_date = (systime - timedelta(minutes=5760)).strftime("%Y-%m-%dT%H:%M:%SZ")
+start_date = (systime - timedelta(minutes=4320)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 # In[144]:
