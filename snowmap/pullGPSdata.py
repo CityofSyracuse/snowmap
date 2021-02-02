@@ -173,7 +173,7 @@ appended_data = pd.DataFrame(columns=['latitude','longitude','messageTime','odom
 
 for i in vehicles:
     try:
-        rjson = requests.get("https://api.networkfleet.com/locations/vehicle/"+i+"/track?limit=7000&with-start-date="+start_date+"&with-end-date="+end_date,
+        rjson = requests.get("https://api.networkfleet.com/locations/vehicle/"+i+"/track?limit=6000&with-start-date="+start_date+"&with-end-date="+end_date,
                        headers={'Authorization': "Bearer "+response['access_token'],
                                 'Accept': "application/vnd.networkfleet.api-v1+json",
                                 'Content-Type': "application/vnd.networkfleet.api-v1+json"}
