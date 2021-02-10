@@ -19,7 +19,7 @@ import numpy as np
 import json
 import re
 import os
-os.chdir('C:/Users/adarcangelo/Downloads/snowmap-master/snowmap-master/snowmap')
+os.chdir('C:/Users/adarcangelo/Desktop/snowmap-master/snowmap')
 
 # In[136]:
 

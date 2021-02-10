@@ -16,7 +16,7 @@ import json
 import io
 import requests
 import os
-os.chdir('C:/Users/adarcangelo/Downloads/snowmap-master/snowmap-master/snowmap')
+os.chdir('C:/Users/adarcangelo/Desktop/snowmap-master/snowmap')
 
 dataSrc = gpd.read_file('dataSrc.geojson')
 
