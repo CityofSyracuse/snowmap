@@ -1,5 +1,5 @@
 @echo on
-call C:\Users\adarc\anaconda3\Scripts\activate.bat
+call C:\Users\adarcangelo\Anaconda3\Scripts\activate.bat
 
 call conda activate exe
 
