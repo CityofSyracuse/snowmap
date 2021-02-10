@@ -1,0 +1,155 @@
+<html>
+<head>
+  <title>Syracuse snowplow tracking map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+  integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+  integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+  crossorigin=""></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.3.2/dist/esri-leaflet.js"
+  integrity="sha512-6LVib9wGnqVKIClCduEwsCub7iauLXpwrd5njR2J507m3A2a4HXJDLMiSZzjcksag3UluIfuW1KzuWVI5n/cuQ=="
+  crossorigin=""></script> 
+  <style>
+    #map{ height: 100% }
+  </style>
+</head>
+<body>
+ 
+  <div id="map"></div>
+ 
+<script>
+ 
+  // initialize the map
+  var map = L.map('map').setView([43.047939,-76.147453], 13);
+  var plowed = L.layerGroup();
+  var notplowed = L.layerGroup();
+  var plowedlasthour = L.layerGroup();
+
+  var d = new Date();
+  var lasthourd = new Date; lasthourd.setHours( lasthourd.getHours() - 1);
+  var lasthour = lasthourd.getHours();
+  var year = d.getFullYear()
+  var month = ("0" + (d.getMonth() +1)).slice(-2)
+  var day = ("0" + d.getDate()).slice(-2)
+  var ymd = year + "-" + month + "-" + day
+
+
+  // load a tile layer
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+    $.getJSON("notplowed.geojson",function(notploweddata){
+        L.geoJson( notploweddata, {
+          style: function(feature){
+            return { color: "grey", weight: .1, fillColor: "grey", fillOpacity: .5 };
+          },
+            onEachFeature: function( feature, layer ){
+        
+        layer.bindPopup( "<strong>" + feature.properties.STREET + "</strong><br/>" + "Not plowed yet")
+      
+            }
+        }).addTo(notplowed);
+    });
+
+    $.getJSON("last_hour.geojson",function(plowed_last){
+        L.geoJson( plowed_last, {
+          style: function(feature){
+            return { color: "green", weight: .1, fillColor: "green", fillOpacity: .7 };
+          },
+          onEachFeature: function( feature, layer ){
+            layer.bindPopup( "<strong>" + feature.properties.STREET + "</strong><br/>" + "Street last plowed at: " + feature.properties.datetime)
+          }
+        }).addTo(plowedlasthour);
+      });
+
+    $.getJSON("mergeddata.geojson",function(ploweddata){
+        L.geoJson( ploweddata, {
+          style: function(feature){
+            return { color: "green", weight: .1, fillColor: "green", fillOpacity: .3 };
+          },
+          onEachFeature: function( feature, layer ){
+            layer.bindPopup( "<strong>" + feature.properties.STREET + "</strong><br/>" + "Street last plowed at: " + feature.properties.datetime)
+          }
+        }).addTo(plowed);
+      });
+
+var black_car = L.icon({
+    iconUrl: 'black_car.png',
+    iconSize: [20,20],
+    iconAnchor: [13.5, 17.5],
+    popupAnchor: [0, -11]
+  });
+
+var red_car = L.icon({
+    iconUrl: 'red_car.png',
+    iconSize: [20,20],
+    iconAnchor: [13.5, 17.5],
+    popupAnchor: [0, -11]
+  });
+
+plowed.addTo(map);
+plowedlasthour.addTo(map);
+notplowed.addTo(map);
+
+var black_car = L.icon({
+    iconUrl: 'black_car.png',
+    iconSize: [20,20],
+    iconAnchor: [13.5, 17.5],
+    popupAnchor: [0, -11]
+  });
+
+var fourty_eight_hours = 48*60*60*1000;
+var startTimeInput = new Date() - fourty_eight_hours;
+var date = new Date(startTimeInput)
+var MyDateString = date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
+
+var impassible_car = L.esri.featureLayer({
+  url: "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Illegally_Parked_Cars_83s/FeatureServer/0/",
+  where: "Impassible = 'Yes' and Date > '" + MyDateString + "'",
+  pointToLayer: function (geojson, latlng) {
+      return L.marker(latlng, {
+        icon: red_car
+      });
+    }
+}).addTo(map);
+
+ 
+impassible_car.bindPopup(function(evt){
+    var featureDate = new Date(evt.feature.properties.Date);
+    return "Street is Impassible because of an <strong>Illegally Parked Car</strong> <br>Date Reported: " + featureDate.toLocaleString();
+});
+
+var illegal_car = L.esri.featureLayer({
+  url: "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/Illegally_Parked_Cars_83s/FeatureServer/0/",
+  where: "Impassible = 'No' and Date > '" + MyDateString + "'",
+  pointToLayer: function (geojson, latlng) {
+      return L.marker(latlng, {
+        icon: black_car
+      });
+    }
+}).addTo(map);
+
+ 
+illegal_car.bindPopup(function(evt){
+    var featureDate = new Date(evt.feature.properties.Date);
+    return "<strong>Illegally Parked Car</strong> <br>Date Reported: " + featureDate.toLocaleString();
+});
+
+var overlays = {
+    "Plowed Last Hour": plowedlasthour,
+    "Plowed": plowed,
+    "Not yet plowed": notplowed
+  };
+
+    L.control.layers(null, overlays,{collapsed:false, position: 'bottomright'}).addTo(map);
+
+
+  </script>
+</body>
+</html>
