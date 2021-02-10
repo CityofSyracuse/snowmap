@@ -1,0 +1,7 @@
+
+#ignore gitpush
+gitpush.sh
+account.txt
+setup_api.py
+api_credentials.json
+data.json
