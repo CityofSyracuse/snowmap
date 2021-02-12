@@ -1,1 +1,1 @@
-{"type": "FeatureCollection", "features": []}
+{"type": "FeatureCollection", "features": [{"id": "2429", "type": "Feature", "properties": {"STREET": "E WASHINGTON ST", "STREET_ID": "12578233", "datetime": "2021-02-12 12:00:00"}, "geometry": {"type": "Polygon", "coordinates": [[[-76.13205261, 43.04953858], [-76.13205721, 43.04915982], [-76.13427463, 43.04918671], [-76.13427003, 43.04956547], [-76.13205261, 43.04953858]]]}}]}
